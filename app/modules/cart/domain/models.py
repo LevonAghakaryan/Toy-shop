@@ -11,7 +11,7 @@ class Cart(Base):
     id = Column(Integer, primary_key=True, index=True)
     # Ժամանակավորապես օգտագործում ենք String՝ Օգտատիրոջ ID-ի կամ Session Token-ի համար
     # Հետագայում այս դաշտը կփոխվի User ID-ի (ForeignKey)
-    user_identifier = Column(String, unique=True, index=True)
+    user_identifier = Column(String(255), unique=True, index=True)
 
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())

@@ -13,7 +13,7 @@ class Category(Base):
 
     # Հիմնական դաշտեր
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, index=True, nullable=False)
+    name = Column(String(255), unique=True, index=True, nullable=False)
 
     # Ռելյացիա Product մոդելի հետ
     # 'products' բեքրեֆը թույլ է տալիս Category օբյեկտից մուտք գործել կապակցված ապրանքներին:
