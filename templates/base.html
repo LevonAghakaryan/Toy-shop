@@ -1,29 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hy">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title> ToyLand 🧸</title>
     <script src="https://cdn.tailwindcss.com?_"></script>
-
 
 
     <style>
         body {
             font-family: 'Inter', sans-serif;
+            /* ԳԵՂԵՑԻԿ ԳՈՒՅՆ: Մուգ մոխրագույն (bg-gray-900)՝ հարթ և պրոֆեսիոնալ տեսքի համար */
+            background-color: #111827; /* bg-gray-900-ի HEX կոդը */
         }
+
+        /* Hero գրադիենտը հիանալի է, թողնում ենք: */
         .hero-gradient {
-            background-image: linear-gradient(135deg, #a78bfa 0%, #d48cf0 50%, #4f46e5 100%);
+            background-image: linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #1e3a8a 100%); /* Մուգ indigo երանգներ */
         }
+        /* Բաց ակցենտը */
         .icon-circle {
-            background-color: #f3f4ff;
+            background-color: #4f46e5; /* Փոխվեց Indigo-ի հիմնական գույնի, ոչ թե շատ բացի */
+            color: white; /* Իկոնների գույնը սպիտակ */
         }
+        /* Մուգ թեմայի հիմնական տեքստի գույները */
         .feature-title {
-            color: #374151;
+            color: #f3f4f6; /* text-gray-100 */
         }
         .feature-description {
-            color: #6b7280;
+            color: #d1d5db; /* text-gray-300 */
         }
         /* Mobile Menu-ի համար անհրաժեշտ ոճեր */
         #mobile-menu.hidden-on-mobile {
@@ -37,8 +43,7 @@
     </style>
 </head>
 
-<body class="bg-white min-h-screen flex flex-col">
-
+<body class="bg-gray-900 min-h-screen flex flex-col">
     {% include 'header.html' %}
 
     <main class="w-full flex-grow pt-24 md:pt-[72px]">
@@ -49,9 +54,9 @@
     {% include 'footer.html' %}
 
     {% block extra_js %}
-        {# Սա թույլ կտա products.html-ին տեղադրել product_filters.js-ի հղումը #}
+        {# Խաղալիքներին համապատասխանող մեկնաբանություն #}
         <script src="{{ url_for('static', path='js/cart_manager.js') }}"></script>
     {% endblock %}
-    </body>
+</body>
 
 </html>

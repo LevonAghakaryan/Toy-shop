@@ -1,64 +1,64 @@
 {% extends "base.html" %}
 
-{% block title %}FreshMarket | Կապ մեզ հետ{% endblock %}
+{% block title %}ToyLand | Կապ մեզ հետ{% endblock %}
 
 {% block content %}
-<div class="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
-    
-    <header class="text-center mb-12">
-        <h1 class="text-4xl sm:text-5xl font-extrabold text-indigo-700 mb-4">
-            Կապ մեզ հետ 👋
+<div class="max-w-4xl mx-auto px-4 py-16 sm:py-24 lg:px-8">
+
+    <header class="text-center mb-16">
+        <h1 class="text-4xl sm:text-5xl font-extrabold text-indigo-400 mb-4 tracking-tight">
+            Կապ մեզ հետ 🎈
         </h1>
-        <p class="text-lg text-gray-600">
-            Ունե՞ք հարցեր, առաջարկներ կամ ցանկանում եք համագործակցել։ Մենք սիրով կպատասխանենք Ձեր բոլոր հարցերին։
+        <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+            Ունե՞ք հարցեր խաղալիքների, առաքման կամ զարգացման վերաբերյալ։ Մենք սիրով կպատասխանենք Ձեր բոլոր հարցերին։
         </p>
     </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-        
-        <div class="text-center p-6 bg-white rounded-xl shadow-lg border border-gray-100 transition-shadow duration-300 hover:shadow-xl">
-            <div class="text-indigo-600 mb-3 text-3xl">📞</div>
-            <h3 class="text-xl font-semibold text-gray-800 mb-1">Հեռախոս</h3>
-            <p class="text-indigo-500 font-medium">+374 11 555 555</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+
+        <div class="text-center p-6 bg-gray-800 rounded-xl shadow-2xl shadow-indigo-900/50 border border-indigo-700/50 transition duration-300 hover:scale-[1.03]">
+            <div class="text-indigo-400 mb-3 text-3xl">📞</div>
+            <h3 class="text-xl font-semibold text-white mb-1">Հեռախոս</h3>
+            <p class="text-indigo-300 font-medium">+374 11 555 555</p>
         </div>
 
-        <div class="text-center p-6 bg-white rounded-xl shadow-lg border border-gray-100 transition-shadow duration-300 hover:shadow-xl">
-            <div class="text-indigo-600 mb-3 text-3xl">📧</div>
-            <h3 class="text-xl font-semibold text-gray-800 mb-1">Էլ. Փոստ</h3>
-            <p class="text-indigo-500 font-medium truncate">info@freshmarket.am</p>
+        <div class="text-center p-6 bg-gray-800 rounded-xl shadow-2xl shadow-indigo-900/50 border border-indigo-700/50 transition duration-300 hover:scale-[1.03]">
+            <div class="text-indigo-400 mb-3 text-3xl">📧</div>
+            <h3 class="text-xl font-semibold text-white mb-1">Էլ. Փոստ</h3>
+            <p class="text-indigo-300 font-medium truncate">info@toyland.am</p>
         </div>
 
-        <div class="text-center p-6 bg-white rounded-xl shadow-lg border border-gray-100 transition-shadow duration-300 hover:shadow-xl">
-            <div class="text-indigo-600 mb-3 text-3xl">📍</div>
-            <h3 class="text-xl font-semibold text-gray-800 mb-1">Հասցե</h3>
-            <p class="text-gray-500">Երևան, Հայաստան, Տիգրան Մեծի 1/1</p>
+        <div class="text-center p-6 bg-gray-800 rounded-xl shadow-2xl shadow-indigo-900/50 border border-indigo-700/50 transition duration-300 hover:scale-[1.03]">
+            <div class="text-indigo-400 mb-3 text-3xl">📍</div>
+            <h3 class="text-xl font-semibold text-white mb-1">Հասցե</h3>
+            <p class="text-gray-400">Երևան, Հայաստան, Տիգրան Մեծի 1/1</p>
         </div>
     </div>
 
-    <div class="bg-white p-8 rounded-xl shadow-2xl border border-gray-100">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Ուղարկեք մեզ հաղորդագրություն</h2>
-        
+    <div class="bg-gray-800 p-8 rounded-2xl shadow-2xl shadow-indigo-900/50 border border-indigo-700/50">
+        <h2 class="text-2xl font-bold text-white mb-6 text-center border-b border-indigo-600/50 pb-3">Ուղարկեք մեզ հաղորդագրություն</h2>
+
         <form>
             <div class="mb-4">
-                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Անուն</label>
+                <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Անուն</label>
                 <input type="text" id="name" name="name" placeholder="Ձեր անունը"
-                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                       class="mt-1 w-full px-4 py-3 border border-gray-700 rounded-lg bg-gray-900 text-white placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500">
             </div>
 
             <div class="mb-4">
-                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Էլ. Փոստ</label>
+                <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Էլ. Փոստ</label>
                 <input type="email" id="email" name="email" placeholder="Ձեր էլ. փոստի հասցեն"
-                       class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                       class="mt-1 w-full px-4 py-3 border border-gray-700 rounded-lg bg-gray-900 text-white placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500">
             </div>
 
             <div class="mb-6">
-                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Հաղորդագրություն</label>
+                <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Հաղորդագրություն</label>
                 <textarea id="message" name="message" rows="4" placeholder="Ձեր հաղորդագրությունը"
-                          class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                          class="mt-1 w-full px-4 py-3 border border-gray-700 rounded-lg bg-gray-900 text-white placeholder-gray-500 focus:ring-indigo-500 focus:border-indigo-500"></textarea>
             </div>
 
-            <button type="submit" 
-                    class="w-full px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 transform hover:scale-[1.01]">
+            <button type="submit"
+                    class="w-full px-6 py-3 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition duration-300 transform hover:scale-[1.01] text-lg">
                 Ուղարկել
             </button>
         </form>

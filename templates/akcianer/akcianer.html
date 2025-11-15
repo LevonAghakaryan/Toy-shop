@@ -1,66 +1,68 @@
 {% extends "base.html" %}
 
-{% block title %}FreshMarket | Ակցիաներ{% endblock %}
+{% block title %}ToyLand | Ակցիաներ{% endblock %}
 
 {% block content %}
-<div class="max-w-6xl mx-auto px-4 py-12">
-    
-    <header class="text-center mb-10">
-        <h1 class="text-5xl font-extrabold text-green-700 mb-4">Ընթացիկ Ակցիաներ 💸</h1>
-        <p class="text-xl text-gray-600">Մի՛ բաց թողեք լավագույն զեղչերը Ձեր սիրելի ապրանքների վրա։</p>
+<div class="max-w-6xl mx-auto px-4 py-16 sm:py-24">
+
+    <header class="text-center mb-16">
+        <h1 class="text-5xl md:text-6xl font-extrabold text-indigo-400 mb-4 tracking-tight">Ընթացիկ Ակցիաներ 🎉</h1>
+        <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+            Մի՛ բաց թողեք լավագույն զեղչերը և նվերները Ձեր փոքրիկի սիրելի խաղալիքների վրա։
+        </p>
     </header>
 
-    <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        
-        <div class="bg-white rounded-xl shadow-xl overflow-hidden transform hover:scale-[1.03] transition-transform duration-500 border-4 border-green-200">
-            <div class="p-6">
-                <div class="bg-red-500 text-white text-sm font-bold inline-block px-3 py-1 rounded-full mb-3">
-                    HOT DEAL
+    <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+
+        <div class="bg-gray-800 rounded-2xl shadow-2xl shadow-red-900/50 overflow-hidden transform hover:scale-[1.03] transition-transform duration-500 border-4 border-red-700/70">
+            <div class="p-8">
+                <div class="bg-red-600 text-white text-sm font-bold inline-block px-4 py-1 rounded-full mb-4 uppercase tracking-wider">
+                    HOT DEAL 💥
                 </div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">Տավարի միս -20%</h2>
-                <p class="text-gray-600 mb-4">
-                    Բարձրորակ տավարի բոլոր տեսակները այս շաբաթ զեղչված են 20%-ով։ Թարմ, որակյալ և մատչելի։
+                <h2 class="text-3xl font-bold text-white mb-3">Կոնստրուկտորներ -20%</h2>
+                <p class="text-gray-400 mb-5 leading-relaxed">
+                    Բոլոր LEGO-ի և համանման կոնստրուկտորների հավաքածուները այս շաբաթ զեղչված են 20%-ով։ Կառուցեք Ձեր երազանքները։
                 </p>
-                <div class="flex justify-between items-center">
-                    <span class="text-4xl font-extrabold text-green-600">20% ⬇️</span>
-                    <a href="/products/all_products?category_id=1" class="bg-green-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
-                        Գնել Հիմա
+                <div class="flex justify-between items-center pt-4 border-t border-gray-700">
+                    <span class="text-5xl font-extrabold text-red-500">20% ⬇️</span>
+                    <a href="/products/all_products?category_id=2" class="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:bg-indigo-700 transition-colors transform hover:scale-105">
+                        Գնել Հիմա →
                     </a>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-xl overflow-hidden transform hover:scale-[1.03] transition-transform duration-500 border-4 border-yellow-200">
-            <div class="p-6">
-                <div class="bg-yellow-500 text-white text-sm font-bold inline-block px-3 py-1 rounded-full mb-3">
-                    Նոր Գին
+        <div class="bg-gray-800 rounded-2xl shadow-2xl shadow-yellow-900/50 overflow-hidden transform hover:scale-[1.03] transition-transform duration-500 border-4 border-yellow-600/70">
+            <div class="p-8">
+                <div class="bg-yellow-600 text-gray-900 text-sm font-bold inline-block px-4 py-1 rounded-full mb-4 uppercase tracking-wider">
+                    ՆՎԵՐ 🎁
                 </div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">Մրգերի Ընտրանի -30%</h2>
-                <p class="text-gray-600 mb-4">
-                    Բոլոր սեզոնային մրգերի գները իջեցվել են 30%-ով։ Օգտվեք առիթից և համալրեք Ձեր վիտամինների պաշարը։
+                <h2 class="text-3xl font-bold text-white mb-3">2+1 Փափուկ Խաղալիք</h2>
+                <p class="text-gray-400 mb-5 leading-relaxed">
+                    Գնեք երկու փափուկ խաղալիք, և երրորդ, ամենացածր գնով խաղալիքը ստացեք անվճար։ Գրկախառնությունների ժամանակն է։
                 </p>
-                <div class="flex justify-between items-center">
-                    <span class="text-4xl font-extrabold text-yellow-600">30% ⬇️</span>
-                    <a href="/all_products" class="bg-yellow-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors">
-                        Գնել Հիմա
+                <div class="flex justify-between items-center pt-4 border-t border-gray-700">
+                    <span class="text-5xl font-extrabold text-yellow-500">33% 🆓</span>
+                    <a href="/products/all_products?category_id=1" class="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:bg-indigo-700 transition-colors transform hover:scale-105">
+                        Դիտել →
                     </a>
                 </div>
             </div>
         </div>
 
-        <div class="bg-white rounded-xl shadow-xl overflow-hidden transform hover:scale-[1.03] transition-transform duration-500 border-4 border-indigo-200">
-            <div class="p-6">
-                <div class="bg-indigo-500 text-white text-sm font-bold inline-block px-3 py-1 rounded-full mb-3">
-                    ՀԱՏՈՒԿ
+        <div class="bg-gray-800 rounded-2xl shadow-2xl shadow-indigo-900/50 overflow-hidden transform hover:scale-[1.03] transition-transform duration-500 border-4 border-indigo-700/70">
+            <div class="p-8">
+                <div class="bg-indigo-600 text-white text-sm font-bold inline-block px-4 py-1 rounded-full mb-4 uppercase tracking-wider">
+                    ՀԱՏՈՒԿ ԱՌԱՔՈՒՄ 🚚
                 </div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-2">Անվճար Առաքում</h2>
-                <p class="text-gray-600 mb-4">
-                    Պատվիրեք 10,000 ֏ և ավել գնումներ, և ստացեք անվճար առաքում Երևանի ցանկացած կետ։
+                <h2 class="text-3xl font-bold text-white mb-3">Անվճար Առաքում</h2>
+                <p class="text-gray-400 mb-5 leading-relaxed">
+                    Պատվիրեք 25,000 ֏ և ավել գնումներ (համարժեք է մոտ 4 խոշոր խաղալիքի), և ստացեք արագ, անվճար առաքում։
                 </p>
-                <div class="flex justify-between items-center">
-                    <span class="text-3xl font-extrabold text-indigo-600">10,000֏+</span>
-                    <a href="/products/all_products" class="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
-                        Պատվիրել
+                <div class="flex justify-between items-center pt-4 border-t border-gray-700">
+                    <span class="text-3xl font-extrabold text-indigo-400">25,000֏+</span>
+                    <a href="/products/all_products" class="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:bg-indigo-700 transition-colors transform hover:scale-105">
+                        Պատվիրել →
                     </a>
                 </div>
             </div>

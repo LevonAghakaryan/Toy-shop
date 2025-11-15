@@ -1,112 +1,111 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="bg-[#FCFAFF]"> <section class="py-16 sm:py-20">
+
+    <section class="py-16 sm:py-24">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
 
-            <div class="text-center">
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-800">Մեր Մասին</h1>
-                <p class="mt-4 max-w-2xl mx-auto text-lg text-gray-600">
-                    FreshMarket-ը ստեղծվել է հանուն այն մարդկանց, ովքեր գնահատում են որակը և թարմությունը
+            <div class="text-center mb-16">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-white tracking-tight">Մեր Մասին</h1>
+                <p class="mt-4 max-w-3xl mx-auto text-xl text-indigo-300">
+                    ToyLand-ը ստեղծվել է հանուն այն փոքրիկների, ովքեր գնահատում են երևակայությունն ու զարգացումը։
                 </p>
             </div>
 
-            <div class="mt-16 max-w-6xl mx-auto bg-white rounded-2xl shadow-lg flex flex-col lg:flex-row overflow-hidden">
+            <div class="max-w-6xl mx-auto bg-gray-800 rounded-3xl shadow-2xl shadow-indigo-900/50 flex flex-col lg:flex-row overflow-hidden transform transition duration-500 hover:scale-[1.01]">
 
-                <div class="lg:w-1/2 p-8 md:p-12">
-                    <h2 class="text-3xl font-bold text-gray-900">Մեր Պատմությունը</h2>
-                    <p class="mt-6 text-gray-600 leading-relaxed">
-                        FreshMarket-ը սկսել է իր գործունեությունը 2014 թվականին՝ փոքր ընտանեկան ձեռնարկություն հանդիսանալով։ Մեր նպատակն էր բերել թարմ և որակյալ մթերքները յուրաքանչյուրի տուն։
+                <div class="lg:w-1/2 p-8 md:p-14 order-2 lg:order-1">
+                    <h2 class="text-3xl font-bold text-indigo-400 border-b border-indigo-700 pb-3">Մեր Պատմությունը</h2>
+                    <p class="mt-6 text-gray-300 leading-relaxed">
+                        ToyLand-ը սկսել է իր գործունեությունը 2018 թվականին՝ փոքրիկ առցանց խանութ հանդիսանալով։ Մեր նպատակն էր բերել զարգացնող և անվտանգ խաղալիքները յուրաքանչյուրի տուն։
                     </p>
-                    <p class="mt-4 text-gray-600 leading-relaxed">
-                        Այսօր մենք հպարտ ենք, որ ծառայում ենք հազարավոր հաճախորդների և առաջարկում ենք լայն տեսականի՝ սկսած սեզոնային մրգերից մինչև թարմ հյութեր։
+                    <p class="mt-4 text-gray-300 leading-relaxed">
+                        Այսօր մենք հպարտ ենք, որ ծառայում ենք հազարավոր ընտանիքների և առաջարկում ենք լայն տեսականի՝ սկսած փափուկ խաղալիքներից մինչև բարդ կոնստրուկտորներ։
                     </p>
-                     <p class="mt-4 text-gray-600 leading-relaxed">
-                        Մեր թիմը միշտ աշխատում է ամենաբարձր պահանջներին համապատասխան ապահովելու համար, որ ամեն ապրանք, որ դուք գնում եք, լինի լավագույն որակի։
+                     <p class="mt-4 text-gray-300 leading-relaxed">
+                        Մեր թիմը միշտ աշխատում է ամենաբարձր անվտանգության պահանջներին համապատասխան ապահովելու համար, որ ամեն ապրանք, որ դուք գնում եք, նպաստի Ձեր փոքրիկի զարգացմանը։
                     </p>
                 </div>
 
-                <div class="lg:w-1/2 bg-gray-50 flex items-center justify-center min-h-[300px] lg:min-h-0">
-
+                <div class="lg:w-1/2 bg-gray-900 flex items-center justify-center min-h-[300px] lg:min-h-auto order-1 lg:order-2 p-4">
                     <img
-                        src="{{ url_for('images', path='/aboutus/fresh.png') }}"
-                        alt="Fresh Market մթերքի նկար"
-                        class="object-cover w-full h-full"
+                        src="{{ url_for('images', path='/aboutus/toys_placeholder.png') }}"
+                        alt="ToyLand խաղալիքների տեսականի"
+                        class="object-cover w-full h-full rounded-2xl border-4 border-indigo-700/70 shadow-2xl"
                     >
-
                 </div>
             </div>
 
         </div>
     </section>
 
-    <section class="py-16 sm:py-20">
+    <section class="py-20 sm:py-28">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            <div class="text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-800">Մեր Արժեքները</h2>
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold text-white">Մեր Արժեքները</h2>
             </div>
 
-            <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
+            <div class="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-                <div class="text-center">
-                    <div class="mx-auto w-20 h-20 bg-[#e9d5ff] rounded-full flex items-center justify-center">
-                         <span class="text-3xl">❤️</span>
+                <div class="bg-gray-800 p-8 rounded-2xl text-center shadow-xl border-t-4 border-indigo-500 transform transition duration-300 hover:bg-gray-700">
+                    <div class="mx-auto w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg mb-4">
+                         <span class="text-3xl text-white">🛡️</span>
                     </div>
-                    <h3 class="mt-5 text-xl font-semibold text-gray-900">Սերը դեպի որակը</h3>
-                    <p class="mt-2 text-gray-600">Մենք ընտրում ենք միայն լավագույն մատակարարները մեր հաճախորդների համար</p>
+                    <h3 class="mt-5 text-xl font-semibold text-white">Անվտանգություն</h3>
+                    <p class="mt-2 text-indigo-300">Միայն հավաստագրված և ոչ-թունավոր նյութեր</p>
                 </div>
 
-                <div class="text-center">
-                    <div class="mx-auto w-20 h-20 bg-[#bae6fd] rounded-full flex items-center justify-center">
-                         <span class="text-3xl">👥</span>
+                <div class="bg-gray-800 p-8 rounded-2xl text-center shadow-xl border-t-4 border-indigo-500 transform transition duration-300 hover:bg-gray-700">
+                    <div class="mx-auto w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg mb-4">
+                         <span class="text-3xl text-white">🧠</span>
                     </div>
-                    <h3 class="mt-5 text-xl font-semibold text-gray-900">Հաճախորդների գոհունակություն</h3>
-                    <p class="mt-2 text-gray-600">Ձեր գոհունակությունը մեր առաջնահերթությունն է</p>
+                    <h3 class="mt-5 text-xl font-semibold text-white">Զարգացում</h3>
+                    <p class="mt-2 text-indigo-300">Խաղալիքներ, որոնք զարգացնում են հմտությունները</p>
                 </div>
 
-                <div class="text-center">
-                    <div class="mx-auto w-20 h-20 bg-[#d1fae5] rounded-full flex items-center justify-center">
-                         <span class="text-3xl">🌿</span>
+                <div class="bg-gray-800 p-8 rounded-2xl text-center shadow-xl border-t-4 border-indigo-500 transform transition duration-300 hover:bg-gray-700">
+                    <div class="mx-auto w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg mb-4">
+                         <span class="text-3xl text-white">🧩</span>
                     </div>
-                    <h3 class="mt-5 text-xl font-semibold text-gray-900">Բնական & Թարմ</h3>
-                    <p class="mt-2 text-gray-600">Միայն բնական և թարմ սննդամթերք ամեն օր</p>
+                    <h3 class="mt-5 text-xl font-semibold text-white">Բազմազանություն</h3>
+                    <p class="mt-2 text-indigo-300">Հազարավոր ապրանքներ բոլոր տարիքային խմբերի համար</p>
                 </div>
 
-                <div class="text-center">
-                    <div class="mx-auto w-20 h-20 bg-[#8b5cf6] text-white rounded-full flex items-center justify-center">
-                         <span class="text-3xl">🏆</span>
+                <div class="bg-gray-800 p-8 rounded-2xl text-center shadow-xl border-t-4 border-indigo-500 transform transition duration-300 hover:bg-gray-700">
+                    <div class="mx-auto w-16 h-16 bg-indigo-600 rounded-full flex items-center justify-center shadow-lg mb-4">
+                         <span class="text-3xl text-white">🥳</span>
                     </div>
-                    <h3 class="mt-5 text-xl font-semibold text-gray-900">Փորձառություն</h3>
-                    <p class="mt-2 text-gray-600">Ավելի քան 10 տարվա փորձառություն սննդամթերքի մատակարարման ոլորտում</p>
+                    <h3 class="mt-5 text-xl font-semibold text-white">Ուրախություն</h3>
+                    <p class="mt-2 text-indigo-300">Մենք նվիրում ենք ուրախություն և դրական էմոցիաներ</p>
                 </div>
 
             </div>
         </div>
     </section>
 
-    <section class="pb-16 sm:pb-20">
+    <section class="pb-16 sm:pb-24">
         <div class="max-w-6xl mx-auto px-6 lg:px-8">
-            <div class="bg-white rounded-2xl shadow-lg">
-                <div class="grid grid-cols-2 md:grid-cols-4">
+            <div class="bg-gray-800 rounded-3xl shadow-2xl shadow-indigo-900/50">
+                <div class="grid grid-cols-2 md:grid-cols-4 divide-x divide-indigo-700/50">
 
-                    <div class="p-8 text-center border-b md:border-b-0 md:border-r border-gray-100">
-                        <h3 class="text-4xl font-bold text-indigo-600">10+</h3>
-                        <p class="mt-1 text-gray-500">Տարի փորձառություն</p>
+                    <div class="p-8 text-center transition duration-300 hover:bg-gray-700 rounded-l-3xl">
+                        <h3 class="text-5xl font-extrabold text-indigo-400">7+</h3>
+                        <p class="mt-2 text-indigo-300">Տարի Փորձառություն</p>
                     </div>
 
-                    <div class="p-8 text-center border-b md:border-b-0 border-l md:border-l-0 md:border-r border-gray-100">
-                        <h3 class="text-4xl font-bold text-indigo-600">5000+</h3>
-                        <p class="mt-1 text-gray-500">Գոհ հաճախորդներ</p>
+                    <div class="p-8 text-center transition duration-300 hover:bg-gray-700">
+                        <h3 class="text-5xl font-extrabold text-indigo-400">10K+</h3>
+                        <p class="mt-2 text-indigo-300">Գոհ Հաճախորդներ</p>
                     </div>
 
-                    <div class="p-8 text-center md:border-r border-gray-100">
-                        <h3 class="text-4xl font-bold text-indigo-600">500+</h3>
-                        <p class="mt-1 text-gray-500">Ապրանքներ</p>
+                    <div class="p-8 text-center transition duration-300 hover:bg-gray-700">
+                        <h3 class="text-5xl font-extrabold text-indigo-400">1500+</h3>
+                        <p class="mt-2 text-indigo-300">Ապրանքներ</p>
                     </div>
 
-                    <div class="p-8 text-center border-l md:border-l-0 border-gray-100">
-                        <h3 class="text-4xl font-bold text-indigo-600">24/7</h3>
-                        <p class="mt-1 text-gray-500">Սպասարկում</p>
+                    <div class="p-8 text-center transition duration-300 hover:bg-gray-700 rounded-r-3xl">
+                        <h3 class="text-5xl font-extrabold text-indigo-400">50+</h3>
+                        <p class="mt-2 text-indigo-300">Բրենդներ</p>
                     </div>
 
                 </div>
@@ -114,5 +113,4 @@
         </div>
     </section>
 
-</div>
 {% endblock %}
