@@ -1,0 +1,90 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+<section class="max-w-4xl mx-auto px-4 py-10">
+    <h1 class="text-3xl font-extrabold mb-8 text-gray-800 border-b pb-2">Իմ Զամբյուղը 🧺</h1>
+
+    <!-- Տեղ՝ զամբյուղի items-ները ցուցադրելու համար -->
+    <div id="cart-items-container" class="space-y-4">
+        <p id="loading-message" class="text-center text-indigo-500 font-medium">Բեռնում եմ զամբյուղի տվյալները...</p>
+    </div>
+
+    <!-- Ամփոփում և Պատվերի Կոճակ -->
+    <div id="cart-summary" class="mt-10 border-t-4 border-indigo-100 pt-6 bg-white p-6 rounded-xl shadow-lg">
+        <h2 class="text-2xl font-bold mb-3 text-gray-700">Ընդհանուր Ամփոփում</h2>
+        <p class="text-3xl font-extrabold text-green-600 mb-8 flex justify-between items-center">
+            <span>Ընդհանուր գումար:</span>
+            <span id="cart-total-amount">0.00</span> ֏
+        </p>
+
+        <button id="checkout-button" onclick="submitOrder()"
+                class="w-full px-8 py-4 bg-indigo-600 text-white font-bold text-lg rounded-xl shadow-indigo-400/50 shadow-md transition duration-300 hover:bg-indigo-700 hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                disabled>
+            Ավարտել Պատվերը (Checkout) 🛒
+        </button>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+    <!-- Կարևոր է՝ օգտագործում ենք նույն cart_manager.js ֆայլը -->
+    <script src="{{ url_for('static', path='js/cart_manager.js') }}"></script>
+
+    <script>
+        // Ֆունկցիան, որը կբեռնի և կցուցադրի զամբյուղը Backend-ից
+        async function loadCartAndRender() {
+            const cartItemsContainer = document.getElementById('cart-items-container');
+            const totalAmountElement = document.getElementById('cart-total-amount');
+            const checkoutButton = document.getElementById('checkout-button');
+            const loadingMessage = document.getElementById('loading-message');
+
+            // 1. Մաքրում ենք բեռնման հաղորդագրությունը
+            cartItemsContainer.innerHTML = '';
+
+            try {
+                // 2. Կանչում ենք ասինքրոն ֆունկցիան Backend-ից տվյալներ բերելու համար
+                const cartData = await fetchCart();
+
+                totalAmountElement.textContent = cartData.total_amount.toFixed(2);
+
+                if (cartData.items.length === 0) {
+                    cartItemsContainer.innerHTML = '<p class="text-xl text-gray-500 font-medium text-center py-10">Ձեր զամբյուղը դատարկ է։ Խնդրում ենք ավելացնել ապրանքներ։</p>';
+                    checkoutButton.disabled = true;
+                } else {
+                    checkoutButton.disabled = false;
+
+                    cartData.items.forEach(item => {
+                        // item.product-ը պարունակում է ապրանքի տվյալները (անուն, գին), item.subtotal-ը եկել է Backend-ից
+                        const subtotal = item.subtotal;
+
+                        const itemDiv = document.createElement('div');
+                        itemDiv.className = 'flex items-center border p-4 rounded-xl bg-white shadow-sm hover:shadow-md transition duration-200';
+                        itemDiv.innerHTML = `
+                            <!-- Ապրանքի Անուն և Գին -->
+                            <div class="flex-grow">
+                                <span class="font-semibold text-lg text-gray-800">${item.product.name}</span>
+                                <p class="text-sm text-gray-500">${item.product.price} ֏ / հատ</p>
+                            </div>
+
+                            <!-- Քանակ -->
+                            <div class="flex items-center mx-4 space-x-2">
+                                <span class="text-gray-600">${item.quantity} հատ</span>
+                            </div>
+
+                            <!-- Ենթագումար -->
+                            <span class="font-extrabold text-xl w-1/4 text-right text-indigo-700">${subtotal.toFixed(2)} ֏</span>
+                        `;
+                        cartItemsContainer.appendChild(itemDiv);
+                    });
+                }
+            } catch (error) {
+                cartItemsContainer.innerHTML = '<p class="text-xl text-red-500 text-center py-10">❌ Տվյալների բեռնման սխալ։</p>';
+                checkoutButton.disabled = true;
+                console.error("Failed to render cart:", error);
+            }
+        }
+
+        // Էջի բեռնումը
+        document.addEventListener('DOMContentLoaded', loadCartAndRender);
+    </script>
+{% endblock %}

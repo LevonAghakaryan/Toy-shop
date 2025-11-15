@@ -1,0 +1,72 @@
+{% extends "base.html" %}
+
+{% block title %}FreshMarket | Ակցիաներ{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-4 py-12">
+    
+    <header class="text-center mb-10">
+        <h1 class="text-5xl font-extrabold text-green-700 mb-4">Ընթացիկ Ակցիաներ 💸</h1>
+        <p class="text-xl text-gray-600">Մի՛ բաց թողեք լավագույն զեղչերը Ձեր սիրելի ապրանքների վրա։</p>
+    </header>
+
+    <main class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
+        <div class="bg-white rounded-xl shadow-xl overflow-hidden transform hover:scale-[1.03] transition-transform duration-500 border-4 border-green-200">
+            <div class="p-6">
+                <div class="bg-red-500 text-white text-sm font-bold inline-block px-3 py-1 rounded-full mb-3">
+                    HOT DEAL
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Տավարի միս -20%</h2>
+                <p class="text-gray-600 mb-4">
+                    Բարձրորակ տավարի բոլոր տեսակները այս շաբաթ զեղչված են 20%-ով։ Թարմ, որակյալ և մատչելի։
+                </p>
+                <div class="flex justify-between items-center">
+                    <span class="text-4xl font-extrabold text-green-600">20% ⬇️</span>
+                    <a href="/products/all_products?category_id=1" class="bg-green-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">
+                        Գնել Հիմա
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-xl overflow-hidden transform hover:scale-[1.03] transition-transform duration-500 border-4 border-yellow-200">
+            <div class="p-6">
+                <div class="bg-yellow-500 text-white text-sm font-bold inline-block px-3 py-1 rounded-full mb-3">
+                    Նոր Գին
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Մրգերի Ընտրանի -30%</h2>
+                <p class="text-gray-600 mb-4">
+                    Բոլոր սեզոնային մրգերի գները իջեցվել են 30%-ով։ Օգտվեք առիթից և համալրեք Ձեր վիտամինների պաշարը։
+                </p>
+                <div class="flex justify-between items-center">
+                    <span class="text-4xl font-extrabold text-yellow-600">30% ⬇️</span>
+                    <a href="/all_products" class="bg-yellow-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-yellow-700 transition-colors">
+                        Գնել Հիմա
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-xl overflow-hidden transform hover:scale-[1.03] transition-transform duration-500 border-4 border-indigo-200">
+            <div class="p-6">
+                <div class="bg-indigo-500 text-white text-sm font-bold inline-block px-3 py-1 rounded-full mb-3">
+                    ՀԱՏՈՒԿ
+                </div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">Անվճար Առաքում</h2>
+                <p class="text-gray-600 mb-4">
+                    Պատվիրեք 10,000 ֏ և ավել գնումներ, և ստացեք անվճար առաքում Երևանի ցանկացած կետ։
+                </p>
+                <div class="flex justify-between items-center">
+                    <span class="text-3xl font-extrabold text-indigo-600">10,000֏+</span>
+                    <a href="/products/all_products" class="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors">
+                        Պատվիրել
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+    </main>
+
+</div>
+{% endblock %}

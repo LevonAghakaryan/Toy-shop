@@ -1,0 +1,42 @@
+# --- Python ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+
+# --- FastAPI / Starlette ---
+*.db
+instance/
+*.sqlite3
+
+# --- Environment files ---
+.env
+.env.*
+
+# --- IDE files ---
+.vscode/
+.idea/
+
+# --- OS files ---
+.DS_Store
+Thumbs.db
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Cache ---
+.cache/
+dist/
+build/
+
+# --- Python packaging ---
+*.egg-info/
+.eggs/
