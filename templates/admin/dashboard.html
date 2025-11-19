@@ -1,0 +1,153 @@
+<!-- templates/admin/dashboard.html -->
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - FreshMarket{% endblock %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto px-6 py-10">
+
+    <!-- Header -->
+    <div class="flex justify-between items-center mb-10 bg-white p-6 rounded-xl shadow-lg">
+        <div>
+            <h1 class="text-4xl font-extrabold text-gray-800">Admin Dashboard 📊</h1>
+            <p class="text-gray-600 mt-1">Բարի գալուստ, <span class="font-semibold text-indigo-600">{{ username }}</span>!</p>
+        </div>
+        <a href="/admin/logout"
+           class="px-6 py-3 bg-red-600 text-white font-semibold rounded-lg shadow-md hover:bg-red-700 transition">
+            Հեռանալ
+        </a>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+        <!-- Left Column: Quick Actions -->
+        <div class="lg:col-span-1">
+            <div class="bg-white rounded-xl shadow-lg p-6 space-y-4">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Գործողություններ</h2>
+
+
+                <button onclick="openCreateProductModal()"
+                        class="w-full px-6 py-3 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+                    ➕ Նոր Ապրանք
+                </button>
+
+            </div>
+
+
+        </div>
+
+        <!-- Right Column: Create Product Form -->
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-xl shadow-lg p-8">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Նոր Ապրանք Ստեղծել</h2>
+
+                <form id="create-product-form" class="space-y-5" onsubmit="handleProductCreate(event)">
+
+                    <!-- Name -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Անվանումը *</label>
+                        <input type="text" name="name" required
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+
+                    <!-- Description -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Նկարագրություն</label>
+                        <textarea name="description" rows="3"
+                                  class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                    </div>
+
+                    <!-- Grid for Price, Stock, Category -->
+                    <div class="grid grid-cols-3 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Գինը (֏) *</label>
+                            <input type="number" name="price" step="0.01" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Պահեստ *</label>
+                            <input type="number" name="stock_quantity" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Կատեգորիա ID *</label>
+                            <input type="number" name="category_id" required
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                    </div>
+
+                    <!-- Image URL -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Նկարի URL</label>
+                        <input type="text" name="img_url"
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit"
+                            class="w-full px-6 py-3 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700 transition">
+                        ✅ Պահպանել Ապրանքը
+                    </button>
+                </form>
+
+                <!-- Status Messages -->
+                <div id="status-message" class="hidden mt-4 p-4 rounded-lg text-sm" role="alert"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+async function handleProductCreate(event) {
+    event.preventDefault();
+
+    const form = event.target;
+    const statusDiv = document.getElementById('status-message');
+
+    const productData = {
+        name: form.name.value,
+        description: form.description.value || null,
+        price: parseFloat(form.price.value),
+        stock_quantity: parseInt(form.stock_quantity.value),
+        category_id: parseInt(form.category_id.value),
+        img_url: form.img_url.value || null
+    };
+
+    try {
+        const response = await fetch('/admin/products/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(productData)
+        });
+
+        const result = await response.json();
+
+        statusDiv.classList.remove('hidden');
+        if (result.success) {
+            statusDiv.className = 'p-4 rounded-lg text-sm bg-green-100 text-green-700';
+            statusDiv.textContent = '✅ Ապրանքը հաջողությամբ ստեղծվեց!';
+            form.reset();
+            setTimeout(() => statusDiv.classList.add('hidden'), 5000);
+        } else {
+            statusDiv.className = 'p-4 rounded-lg text-sm bg-red-100 text-red-700';
+            statusDiv.textContent = '❌ Սխալ: ' + result.message;
+        }
+    } catch (error) {
+        statusDiv.classList.remove('hidden');
+        statusDiv.className = 'p-4 rounded-lg text-sm bg-red-100 text-red-700';
+        statusDiv.textContent = '❌ Ցանցային սխալ';
+        console.error(error);
+    }
+}
+
+function openCreateProductModal() {
+    document.getElementById('create-product-form').scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+{% endblock %}

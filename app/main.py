@@ -9,7 +9,7 @@ from .modules.products.presentation.router import router as products_router
 from .modules.category.presentation.router import router as category_router
 from .modules.orders.presentation.router import router as orders_router
 from .modules.cart.presentation.router import router as cart_router
-
+from .modules.admin.presentation.router import router as admin_router
 app = FastAPI(title="FOODMARKET")
 
 # Static ֆայլերի միացում
@@ -64,6 +64,6 @@ app.include_router(products_router)
 app.include_router(category_router)
 app.include_router(orders_router)
 app.include_router(cart_router)
-
+app.include_router(admin_router)
 if __name__ == "__main__":
     uvicorn.run("app.main:app", host="127.0.0.1", port=8000, reload=True)
