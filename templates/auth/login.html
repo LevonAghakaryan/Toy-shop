@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-50 pt-24 pb-12">
+    <div class="w-full max-w-md bg-white p-8 rounded-xl shadow-2xl border border-gray-100">
+        <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-6">
+            Մուտք FreshMarket 🚪
+        </h2>
+        <p class="text-center text-sm text-gray-600 mb-8">
+            Չունե՞ք հաշիվ։
+            <a href="/register" class="font-medium text-green-600 hover:text-green-500 transition-colors">
+                Գրանցվել հիմա
+            </a>
+        </p>
+
+        <!-- ՖՈՐՄԱՅԻ ՀԱՂՈՐԴԱԳՐՈՒԹՅԱՆ ՏԱՐԱԾՔ -->
+        <div id="message-container" class="mb-4 hidden rounded-lg p-3 text-sm" role="alert"></div>
+
+        <form id="login-form" class="space-y-6">
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">
+                    Էլեկտրոնային հասցե
+                </label>
+                <div class="mt-1">
+                    <input id="email" name="email" type="email" autocomplete="email" required
+                           class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">
+                    Գաղտնաբառ
+                </label>
+                <div class="mt-1">
+                    <input id="password" name="password" type="password" autocomplete="current-password" required
+                           class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+            </div>
+
+            <div>
+                <button type="submit"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300 disabled:opacity-50"
+                        id="login-button">
+                    Մուտք գործել
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const loginForm = document.getElementById('login-form');
+    const messageContainer = document.getElementById('message-container');
+    const loginButton = document.getElementById('login-button');
+
+    // Ստուգում ենք URL-ի պարամետրերը՝ հաղորդագրություններ ցուցադրելու համար
+    function checkUrlParams() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('registered') === 'true') {
+            displayMessage('✅ Գրանցումը հաջողությամբ կատարված է։ Մուտք գործեք։', false);
+        }
+        if (urlParams.get('logged_out') === 'true') {
+            displayMessage('👋 Հաջողությամբ դուրս եկաք համակարգից։', false);
+        }
+    }
+    checkUrlParams();
+
+
+    function displayMessage(text, isError = false) {
+        messageContainer.textContent = text;
+        messageContainer.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'bg-green-100', 'text-green-800');
+        if (isError) {
+            messageContainer.classList.add('bg-red-100', 'text-red-800');
+        } else {
+            messageContainer.classList.add('bg-green-100', 'text-green-800');
+        }
+    }
+
+    loginForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        loginButton.disabled = true;
+        loginButton.textContent = 'Մուտք է կատարվում...';
+        messageContainer.classList.add('hidden');
+
+        const formData = new FormData(loginForm);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                // Հաջող մուտք. վերահղում ենք գլխավոր էջ
+                displayMessage('🎉 Մուտքը հաջողությամբ կատարված է։', false);
+                setTimeout(() => {
+                    window.location.href = '/'; // Կամ ցանկացած այլ էջ
+                }, 1000);
+            } else {
+                // Սխալի մշակում (օրինակ՝ սխալ գաղտնաբառ/էլ. հասցե)
+                const errorMessage = result.detail || 'Մուտքի սխալ։ Սխալ էլ․ հասցե կամ գաղտնաբառ։';
+                displayMessage(`❌ ${errorMessage}`, true);
+                loginButton.disabled = false;
+                loginButton.textContent = 'Մուտք գործել';
+            }
+        } catch (error) {
+            console.error('Network error:', error);
+            displayMessage('Ցանցային սխալ։ Խնդրում ենք, ստուգել ինտերնետ կապը։', true);
+            loginButton.disabled = false;
+            loginButton.textContent = 'Մուտք գործել';
+        }
+    });
+</script>
+{% endblock %}

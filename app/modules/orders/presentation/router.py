@@ -4,16 +4,11 @@ from app.core.database import get_db
 from app.modules.products.infrastructure.repositories import ProductRepository
 from app.modules.orders.infrastructure.repositories import OrderRepository
 from app.modules.orders.application.services import OrderService
-
-# Ներմուծում ենք ճիշտ անունները
 from app.modules.orders.domain.schemas import Order, OrderCreate, OrderUpdate
+# ՆՈՐ ԻՄՊՈՐՏ՝ աուտենտիֆիկացված User ID-ն ստանալու համար
+from app.modules.users.presentation.router import get_current_user_id
 
 router = APIRouter(prefix="/orders", tags=["Orders"])
-
-
-def get_user_identifier(user_id: str = Header(..., alias="X-User-Identifier")) -> str:
-    """Ստանում է օգտատիրոջ/սեսիայի ID-ն Header-ից։"""
-    return user_id
 
 
 def get_order_service(db: Session = Depends(get_db)) -> OrderService:
@@ -29,15 +24,13 @@ def get_order_service(db: Session = Depends(get_db)) -> OrderService:
 
 @router.post("/", response_model=Order, status_code=status.HTTP_201_CREATED)
 async def create_order_api(
-        # ՈՒՂՂՈՒՄ: Տրամադրում ենք լռելյայն արժեք OrderCreate() -ի միջոցով:
-        # Սա կլուծի 422 սխալը, եթե հարցման մարմինը դատարկ է։
         order_data: OrderCreate = OrderCreate(),
-        user_identifier: str = Depends(get_user_identifier),
+        user_id: int = Depends(get_current_user_id), # 👈 ՆՈՐ ԿԱԽՎԱԾՈՒԹՅՈՒՆ
         service: OrderService = Depends(get_order_service)
 ):
     """
-    Ստեղծում է նոր պատվեր՝ օգտատիրոջ Backend-ի զամբյուղից։
+    Ստեղծում է նոր պատվեր՝ մուտք գործած օգտատիրոջ զամբյուղից։
     """
-    # Փոխանցում ենք order_data-ն service-ին
-    new_order = service.create_order_from_cart(user_identifier, order_data)
+    # Փոխանցում ենք user_id-ն service-ին
+    new_order = service.create_order_from_cart(user_id, order_data)
     return new_order

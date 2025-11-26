@@ -2,30 +2,23 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy import String, Integer, Float, ForeignKey, DateTime, func, Text
 from app.core.database import Base  # Ձեր հիմնական Base-ը
 from typing import List
+from app.modules.users.domain.models import User  # 👈 ՆՈՐ Իմպորտ
 
-
-# Անհրաժեշտ է ապրանքի գինը ստուգելու համար, բայց այս մոդուլում այն չենք օգտագործում,
-# այլ միայն հղում ենք անում 'products.id'-ին:
 
 # ----------------- 1. Order (Պատվեր) Մոդելը -----------------
 class Order(Base):
-    """
-    Հաճախորդի կողմից տեղադրված պատվերի հիմնական գրանցումը
-    """
     __tablename__ = "orders"
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
 
-    # Պատվերի ընդհանուր գումարը (հաշվարկվում է OrderItem-ներից)
+    # ՆՈՐ ԴԱՇՏ. Օտար բանալի դեպի User
+    user_id: Mapped[int] = mapped_column(ForeignKey("users.id"), nullable=False)  # 👈 ՆՈՐ ԴԱՇՏ
+
     total_amount: Mapped[float] = mapped_column(Float, nullable=False, default=0.0)
-
-    # Պատվերի ընթացիկ կարգավիճակը (Օրինակ՝ "Pending", "Processing", "Delivered")
     status: Mapped[str] = mapped_column(String(50), nullable=False, default="Pending")
-
-    # Պատվերի տեղադրման ամսաթիվը և ժամը
     created_at: Mapped[DateTime] = mapped_column(DateTime, default=func.now())
 
-    # Հաճախորդի տվյալները (եթե օգտագործողների մոդուլը դեռ չկա)
+    # customer_name և customer_address կարող են մնալ, բայց հիմնական կապն User-ի հետ է
     customer_name: Mapped[str] = mapped_column(String(100), nullable=True)
     customer_address: Mapped[str] = mapped_column(Text, nullable=True)
 
@@ -33,6 +26,9 @@ class Order(Base):
     items: Mapped[List["OrderItem"]] = relationship(
         back_populates="order", cascade="all, delete-orphan"
     )
+
+    # Կապ User-ի հետ
+    user: Mapped["User"] = relationship(back_populates="orders")  # 👈 ՆՈՐ Կապ
 
 
 # ----------------- 2. OrderItem (Պատվերի Ապրանք) Մոդելը -----------------

@@ -7,7 +7,6 @@ from app.modules.products.infrastructure.repositories import ProductRepository
 from app.modules.cart.infrastructure.repositories import CartRepository
 from app.modules.orders.infrastructure.repositories import OrderRepository
 from app.modules.orders.domain.models import Order, OrderItem
-# Իմպորտ ենք անում OrderCreate-ը
 from app.modules.orders.domain.schemas import OrderCreate
 
 
@@ -20,14 +19,15 @@ class OrderService:
         self.product_repository = product_repository
         self.cart_repository = cart_repository
 
-    # ՓՈՓՈԽՈՒԹՅՈՒՆ: Ավելացրել ենք order_data պարամետրը
-    def create_order_from_cart(self, user_identifier: str, order_data: Optional[OrderCreate] = None) -> Order:
+    # ՓՈՓՈԽՈՒԹՅՈՒՆ: Փոխարինում ենք user_identifier-ը user_id: int-ով
+    def create_order_from_cart(self, user_id: int, order_data: Optional[OrderCreate] = None) -> Order:
         """
         Ստեղծում է նոր պատվեր՝ օգտատիրոջ Backend-ի զամբյուղից (Transaction)։
         Նվազեցնում է պահեստը և մաքրում զամբյուղը։
         """
         # 1. Բերել Cart-ի տվյալները (ներառում է CartItem-ները)
-        cart = self.cart_repository.get_cart_by_identifier(user_identifier)
+        # ՓՈՓՈԽՈՒԹՅՈՒՆ: Օգտագործում ենք CartRepository-ի նոր մեթոդը
+        cart = self.cart_repository.get_cart_by_user_id(user_id)
         if not cart or not cart.items:
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Զամբյուղը դատարկ է կամ չի գտնվել:")
 
@@ -35,10 +35,9 @@ class OrderService:
         total_amount = 0.0
 
         for cart_item in cart.items:
-            # Բերում ենք ապրանքը DB-ից՝ ՔԱՆԱԿԸ ՆՎԱԶԵՑՆԵԼՈՒ ՀԱՄԱՐ
             product = self.product_repository.get_product_by_id(cart_item.product_id)
 
-            # 2. ՎԵՐՋՆԱԿԱՆ ՍՏՈՒԳՈՒՄ (Critical Race Condition-ի դեմ)
+            # 2. ՎԵՐՋՆԱԿԱՆ ՍՏՈՒԳՈՒՄ
             if not product or product.stock_quantity < cart_item.quantity:
                 raise HTTPException(
                     status_code=status.HTTP_400_BAD_REQUEST,
@@ -50,7 +49,6 @@ class OrderService:
 
             # 4. OrderItem-ի Ստեղծում
             price_at_purchase = product.price
-            # subtotal-ը այլևս չի օգտագործվում, քանի որ այն հեռացվեց Pydantic-ից
             subtotal = price_at_purchase * cart_item.quantity
             total_amount += subtotal
 
@@ -64,10 +62,11 @@ class OrderService:
 
         # 5. Order-ի Ստեղծում
         new_order = Order(
+            # ՆՈՐ ԴԱՇՏ. Կապում ենք պատվերը օգտատիրոջ հետ
+            user_id=user_id,
             total_amount=total_amount,
             status="Pending",
             items=order_items_list,
-            # ՓՈՓՈԽՈՒԹՅՈՒՆ: Տեղադրում ենք հաճախորդի տվյալները
             customer_name=order_data.customer_name if order_data else None,
             customer_address=order_data.customer_address if order_data else None,
         )

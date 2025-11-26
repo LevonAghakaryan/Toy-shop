@@ -13,10 +13,33 @@
             <a href="/blog" class="text-gray-300 hover:text-white font-medium transition-colors">Բլոգ</a>
             <a href="/akcianer" class="text-gray-300 hover:text-white font-medium transition-colors">Զեղչեր</a>
 
-            <a href="/cart"
-                class="px-5 py-2 bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-600 transition-colors duration-300">
-                🎁 Գնումներ
-            </a>
+            {% if user %}
+                <div class="flex items-center space-x-4 border-l pl-4 border-gray-200">
+                    <span class="font-semibold text-indigo-700 whitespace-nowrap">{{ user.username or user.email }}</span>
+
+                    <button id="logout-button"
+                        class="px-3 py-2 text-white bg-indigo-600 font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition-colors duration-300">
+                        ➡️ Դուրս գալ
+                    </button>
+                </div>
+            {% else %}
+                <div class="flex items-center space-x-4 border-l pl-4 border-gray-200">
+                    <a href="/login"
+                        class="px-3 py-2 text-indigo-600 font-semibold rounded-lg hover:bg-indigo-50 transition-colors duration-300 border border-indigo-600 hover:border-indigo-700 whitespace-nowrap">
+                        Մուտք
+                    </a>
+                    <a href="/register"
+                        class="px-3 py-2 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition-colors duration-300 whitespace-nowrap">
+                        Գրանցվել
+                    </a>
+                </div>
+            {% endif %}
+                <a href="/cart"
+                class="px-5 py-2 ml-4 bg-indigo-600 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-700 transition-colors duration-300 whitespace-nowrap relative">
+                Գնումներ
+                <span id="cart-item-count"
+                      class="absolute -top-2 -right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full hidden">0</span>
+                </a>
         </nav>
 
         <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-white">
@@ -26,3 +49,34 @@
 
 
 </header>
+
+<script>
+    // Աուտենտիֆիկացիոն ֆունկցիաները աշխատում են բոլոր էջերում
+    document.addEventListener('DOMContentLoaded', () => {
+        const logoutButton = document.getElementById('logout-button');
+        if (logoutButton) {
+            logoutButton.addEventListener('click', async () => {
+                try {
+                    // Ուղարկում ենք POST հարցում դուրս գալու endpoint-ին
+                    const response = await fetch('/users/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+
+                    if (response.ok) {
+                        // Հաջող դուրս գալուց հետո վերահղում ենք գլխավոր էջ կամ մուտքի էջ
+                        window.location.href = '/login?logged_out=true';
+                    } else {
+                        console.error('Logout failed:', await response.json());
+                        alert('Սխալ դուրս գալու ժամանակ։ Խնդրում ենք, փորձել կրկին։');
+                    }
+                } catch (error) {
+                    console.error('Network error during logout:', error);
+                    alert('Ցանցային սխալ։');
+                }
+            });
+        }
+    });
+</script>

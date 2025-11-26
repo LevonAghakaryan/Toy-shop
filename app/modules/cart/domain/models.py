@@ -3,22 +3,26 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
 from app.core.database import Base  # Ենթադրում ենք, որ Base-ը ճիշտ է իմպորտ արվում
 from app.modules.products.domain.models import Product
+from app.modules.users.domain.models import User  # 👈 ՆՈՐ Իմպորտ
+
 
 class Cart(Base):
-    """Զամբյուղի հիմնական մոդելը, որը կապվում է օգտատիրոջ կամ սեսիայի հետ։"""
     __tablename__ = "carts"
 
     id = Column(Integer, primary_key=True, index=True)
-    # Ժամանակավորապես օգտագործում ենք String՝ Օգտատիրոջ ID-ի կամ Session Token-ի համար
-    # Հետագայում այս դաշտը կփոխվի User ID-ի (ForeignKey)
-    user_identifier = Column(String(255), unique=True, index=True)
+
+    # ՓՈՓՈԽՈՒԹՅՈՒՆ
+    # user_identifier-ի փոխարեն օգտագործում ենք user_id (Օտար Բանալի)
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), unique=True, nullable=False)
 
     created_at = Column(DateTime, server_default=func.now())
     updated_at = Column(DateTime, onupdate=func.now())
 
-    # Կապ CartItem-ների հետ (Մեկ Cart-ը կարող է ունենալ բազմաթիվ CartItem-ներ)
+    # Relationships
     items = relationship("CartItem", back_populates="cart", cascade="all, delete-orphan")
 
+    # Կապ User-ի հետ
+    user = relationship("User", back_populates="carts")  # 👈 ՆՈՐ Կապ
 
 class CartItem(Base):
     """Զամբյուղի առանձին ապրանքների մոդելը։"""

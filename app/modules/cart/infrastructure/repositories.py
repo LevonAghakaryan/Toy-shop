@@ -1,15 +1,17 @@
 from sqlalchemy.orm import Session, joinedload
 from app.modules.cart.domain.models import Cart, CartItem
-from app.modules.products.domain.models import Product # Product-ը հարկավոր է joinedload-ի համար
+from app.modules.products.domain.models import Product
 from typing import Optional
 
 class CartRepository:
     def __init__(self, db: Session):
         self.db = db
 
-    def get_cart_by_identifier(self, identifier: str) -> Optional[Cart]:
-        """Գտնում է զամբյուղը user_identifier-ի միջոցով (մեր դեպքում՝ session ID-ով)։"""
-        return self.db.query(Cart).filter(Cart.user_identifier == identifier).first()
+    # ՓՈՓՈԽՈՒԹՅՈՒՆ: Օգտագործում ենք user_id-ն
+    def get_cart_by_user_id(self, user_id: int) -> Optional[Cart]:
+        """Գտնում է զամբյուղը user_id-ի միջոցով։"""
+        # Մենք գիտենք, որ user_id-ն Cart-ում եզակի է (unique=True)
+        return self.db.query(Cart).filter(Cart.user_id == user_id).first()
 
     def get_cart_item(self, cart_id: int, product_id: int) -> Optional[CartItem]:
         """Գտնում է կոնկրետ ապրանքը զամբյուղում։"""
@@ -18,11 +20,13 @@ class CartRepository:
             CartItem.product_id == product_id
         ).first()
 
-    def create_or_get_cart(self, identifier: str) -> Cart:
-        """Ստեղծում է նոր զամբյուղ կամ վերադարձնում առկան։"""
-        cart = self.get_cart_by_identifier(identifier)
+    # ՓՈՓՈԽՈՒԹՅՈՒՆ: Օգտագործում ենք user_id-ն
+    def create_or_get_cart(self, user_id: int) -> Cart:
+        """Ստեղծում է նոր զամբյուղ կամ վերադարձնում առկան՝ User ID-ով։"""
+        cart = self.get_cart_by_user_id(user_id)
         if not cart:
-            cart = Cart(user_identifier=identifier)
+            # ՓՈՓՈԽՈՒԹՅՈՒՆ: user_identifier-ի փոխարեն դնում ենք user_id
+            cart = Cart(user_id=user_id)
             self.db.add(cart)
             self.db.commit()
             self.db.refresh(cart)

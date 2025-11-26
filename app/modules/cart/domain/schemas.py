@@ -1,53 +1,32 @@
-from pydantic import BaseModel, Field
+from pydantic import BaseModel
 from typing import List, Optional
+# Ենթադրենք՝ դուք ունեք այս իմպորտը՝ ապրանքի տվյալների համար
+from app.modules.products.domain.schemas import Product
 
 
-# --- Input Schemas ---
-
+# 1. CartItem-ի սխեմա՝ հարցման համար (Frontend-ից)
 class CartItemCreate(BaseModel):
-    """Զամբյուղին նոր ապրանք ավելացնելու կամ քանակը փոխելու համար։"""
-    product_id: int = Field(..., description="Ապրանքի ID")
-    quantity: int = Field(..., gt=0, description="Ավելացվող քանակ")
+    product_id: int
+    quantity: int
 
-
-class CartIdentifier(BaseModel):
-    """Օգտատիրոջ ինդենտիֆիկատորը։"""
-    # Օգտագործելու ենք օգտատիրոջ ID-ի կամ Session Token-ի փոխարեն
-    user_id: str = Field(..., description="Օգտատիրոջ ինդենտիֆիկատորը (Session ID)")
-
-
-# --- Output Schemas ---
-
-class ProductBaseInfo(BaseModel):
-    """Միայն այն ինֆորմացիան, որը պետք է CartItem-ի հետ ցուցադրել։"""
-    id: int
-    name: str
-    price: float
-    stock_quantity: int
-    img_url: Optional[str] = None
-
-    class Config:
-        from_attributes = True
-
-
+# 2. CartItem-ի սխեմա՝ պատասխանի համար
 class CartItemResponse(BaseModel):
-    """CartItem-ի ամբողջական տեսքը (ներառյալ Product-ի տվյալները)։"""
     id: int
     product_id: int
     quantity: int
-    product: ProductBaseInfo  # Կապված ապրանքի տվյալները
-    subtotal: float  # Այս դաշտը կհաշվարկվի ծառայության մեջ
+    subtotal: float
+    product: Product # Կամ ProductResponse, եթե այդպիսին կա
 
     class Config:
         from_attributes = True
 
-
+# 3. Զամբյուղի հիմնական պատասխանը (Response)
 class CartResponse(BaseModel):
-    """Զամբյուղի ամբողջական տեսքը։"""
     id: int
-    user_identifier: str
+    # ՓՈՓՈԽՈՒԹՅՈՒՆ. user_identifier: str-ի փոխարեն user_id: int
+    user_id: int
     items: List[CartItemResponse]
-    total_amount: float  # Զամբյուղի ընդհանուր գումարը
+    total_amount: float
 
     class Config:
         from_attributes = True

@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-50 pt-24 pb-12">
+    <div class="w-full max-w-md bg-white p-8 rounded-xl shadow-2xl border border-gray-100">
+        <h2 class="text-3xl font-extrabold text-gray-900 text-center mb-6">
+            Գրանցվել FreshMarket-ում 🚀
+        </h2>
+        <p class="text-center text-sm text-gray-600 mb-8">
+            Արդեն ունե՞ք հաշիվ։
+            <a href="/login" class="font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
+                Մուտք գործեք
+            </a>
+        </p>
+
+        <!-- ՖՈՐՄԱՅԻ ՀԱՂՈՐԴԱԳՐՈՒԹՅԱՆ ՏԱՐԱԾՔ -->
+        <div id="message-container" class="mb-4 hidden rounded-lg p-3 text-sm" role="alert"></div>
+
+        <form id="register-form" class="space-y-6">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700">
+                    Օգտատիրոջ անունը
+                </label>
+                <div class="mt-1">
+                    <input id="username" name="username" type="text" autocomplete="username" required
+                           class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+            </div>
+
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">
+                    Էլեկտրոնային հասցե
+                </label>
+                <div class="mt-1">
+                    <input id="email" name="email" type="email" autocomplete="email" required
+                           class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+            </div>
+
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">
+                    Գաղտնաբառ (առնվազն 6 նիշ)
+                </label>
+                <div class="mt-1">
+                    <input id="password" name="password" type="password" autocomplete="new-password" required
+                           class="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                </div>
+            </div>
+
+            <div>
+                <button type="submit"
+                        class="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 transition-colors duration-300 disabled:opacity-50"
+                        id="register-button">
+                    Գրանցվել
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    const registerForm = document.getElementById('register-form');
+    const messageContainer = document.getElementById('message-container');
+    const registerButton = document.getElementById('register-button');
+
+    function displayMessage(text, isError = false) {
+        messageContainer.textContent = text;
+        messageContainer.classList.remove('hidden', 'bg-red-100', 'text-red-800', 'bg-green-100', 'text-green-800');
+        if (isError) {
+            messageContainer.classList.add('bg-red-100', 'text-red-800');
+        } else {
+            messageContainer.classList.add('bg-green-100', 'text-green-800');
+        }
+    }
+
+    registerForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        registerButton.disabled = true;
+        registerButton.textContent = 'Գրանցվում է...';
+        messageContainer.classList.add('hidden');
+
+        const formData = new FormData(registerForm);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('/users/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                // Հաջող գրանցում. ուղղորդում ենք մուտքի էջ
+                displayMessage('🎉 Գրանցումը հաջողությամբ կատարված է։ Մուտք գործեք։', false);
+                setTimeout(() => {
+                    window.location.href = '/login?registered=true';
+                }, 1500);
+            } else {
+                // Սխալի մշակում
+                const errorMessage = result.detail || 'Գրանցման սխալ։ Ստուգեք Ձեր տվյալները։';
+                displayMessage(`❌ ${errorMessage}`, true);
+                registerButton.disabled = false;
+                registerButton.textContent = 'Գրանցվել';
+            }
+        } catch (error) {
+            console.error('Network error:', error);
+            displayMessage('Ցանցային սխալ։ Խնդրում ենք, ստուգել ինտերնետ կապը։', true);
+            registerButton.disabled = false;
+            registerButton.textContent = 'Գրանցվել';
+        }
+    });
+</script>
+{% endblock %}
